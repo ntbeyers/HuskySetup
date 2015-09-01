@@ -58,7 +58,7 @@ class navigation_control(object):
         finally:
             self.sock.close()
             np.save('long ' + str(self.longitudinal_pid) + ' lat ' +
-                str(self.lateral_pid) + ' theta ' + str(self.angle_pid) + ' ' + str(datetime.now()), self.logger)
+                    str(self.lateral_pid) + ' theta ' + str(self.angle_pid) + ' ' + str(datetime.now()), self.logger)
 
     def __run__(self):
         pth = pthgen.PathGenerator(path_type='circle', speed=.3) #create the path to be used
@@ -90,9 +90,9 @@ class navigation_control(object):
             # calculate error
             reference_x_temp, reference_y_temp = pth.getPosition()
 
-            reference_angle = np.arctan2(reference_y_temp - reference_y, reference_x_temp - reference_x)
-            angle_error = reference_angle - self.pose_msg.theta
-            angle_error_wrapped = (angle_error + np.pi) % (2 * np.pi) - np.pi
+            reference_angle = np.arctan2(reference_y_temp - reference_y, reference_x_temp - reference_x) #determine angle of travel from previous point
+            angle_error = reference_angle - self.pose_msg.theta #determine difference between current angle and target
+            angle_error_wrapped = (angle_error + np.pi) % (2 * np.pi) - np.pi #
             reference_x = reference_x_temp
             reference_y = reference_y_temp
             diff_x = reference_x - self.pose_msg.x / 1000
