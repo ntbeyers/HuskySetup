@@ -7,7 +7,7 @@ import sys
 # Generate a set of paths
 
 
-class PathGenerator(): #Create a regularly shaped path for a robot to drive at a fixed speed
+class PathGenerator():
 
     def __init__(self, path_type='circle', speed=.1):
         self.time = time()
